@@ -50,6 +50,16 @@ async function run() {
       res.send(result);
     })
     
+    // Get user data by email
+    app.get('/user', async (req, res) => {
+      let query = {};
+      if (req.query?.email) {
+        query = { email: req.query.email }
+      }
+      const result = await usersCollection.find(query).toArray();
+      res.send(result);
+    })
+    
     // Add user while signup
     app.post('/users', async (req, res) => {
       const user = req.body;
