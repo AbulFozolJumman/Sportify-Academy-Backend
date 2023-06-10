@@ -40,11 +40,11 @@ async function run() {
       res.send(result);
     })
 
-    // Get all users data
+    // Get all users data and get users data by role
     app.get('/users', async (req, res) => {
       let query = {};
-      if (req.query?.email) {
-        query = { email: req.query.email }
+      if (req.query?.role) {
+        query = { role: req.query.role }
       }
       const result = await usersCollection.find(query).toArray();
       res.send(result);
