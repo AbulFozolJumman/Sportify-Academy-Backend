@@ -64,6 +64,13 @@ async function run() {
       }
     });
 
+    // Add a class
+    app.post('/classes', async (req, res) => {
+      const addedClass = req.body;
+      const result = await classesCollection.insertOne(addedClass);
+      res.send(result);
+    });
+
     // Get all users data and get users data by role
     app.get('/users', async (req, res) => {
       let query = {};
