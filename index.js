@@ -49,6 +49,20 @@ async function run() {
       res.send(result);
     });
 
+    // Get class by _id
+    app.get('/class/:id', async (req, res) => {
+      const { id } = req.params;
+      try {
+        const toy = await classesCollection.findOne({ _id: new ObjectId(id) });
+        if (!toy) {
+          return res.status(404).json({ error: 'Toy not found' });
+        }
+        res.json(toy);
+      } catch (error) {
+        console.error('Error fetching classes:', error);
+        res.status(500).json({ error: 'Internal server error', message: error.message });
+      }
+    });
 
     // Get all users data and get users data by role
     app.get('/users', async (req, res) => {
