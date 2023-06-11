@@ -3,7 +3,7 @@ const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 5000;
 require("dotenv").config()
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
 // Middleware
 app.use(cors());
@@ -40,6 +40,16 @@ async function run() {
       res.send(result);
     })
 
+    // Get top 6 classes based on the number of students
+    app.get('/topClasses', async (req, res) => {
+      const result = await classesCollection.find()
+        .sort({ students: -1 }) // Sort in descending order based on the number of students
+        .limit(6) // Limit the result to 6 classes
+        .toArray();
+      res.send(result);
+    });
+
+
     // Get all users data and get users data by role
     app.get('/users', async (req, res) => {
       let query = {};
@@ -49,7 +59,7 @@ async function run() {
       const result = await usersCollection.find(query).toArray();
       res.send(result);
     })
-    
+
     // Get user data by email
     app.get('/user', async (req, res) => {
       let query = {};
@@ -59,7 +69,7 @@ async function run() {
       const result = await usersCollection.find(query).toArray();
       res.send(result);
     })
-    
+
     // Add user while signup
     app.post('/users', async (req, res) => {
       const user = req.body;
