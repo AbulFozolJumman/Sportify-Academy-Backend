@@ -1,1 +1,3 @@
-# b7a12-summer-camp-server_side-AbulFozolJumman
+# Sportify Academy Backend
+
+## Server Link - https://sportify-academy-server.vercel.app/
